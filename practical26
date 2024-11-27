@@ -1,0 +1,131 @@
+Program: 26 You are tasked with creating a system for managing sports teams in 
+CHARUSAT. Each team consists of a team name, sport type (e.g., basketball, 
+football), and a coach. Each coach has details such as name, age, and experience. 
+Your program should: 
+ Store information about multiple sports teams and their coaches. 
+ Allow the user to add, search, and display team and coach information. 
+Hint: Use a nested structure where the team structure contains another structure 
+for coach details. 
+Code: #include <stdio.h> 
+#include <string.h> 
+ 
+// Define a structure for Coach details 
+struct Coach { 
+    char name[50]; 
+    int age; 
+    int experience; // In years 
+}; 
+ 
+// Define a structure for Team details 
+struct Team { 
+    char teamName[50]; 
+    char sportType[30]; 
+    struct Coach coach; // Nested structure for coach details 
+}; 
+ 
+// Declare an array to store multiple teams 
+struct Team teams[50]; 
+int teamCount = 0; // Keeps track of the number of teams 
+ 
+// Function to add a team 
+void addTeam() { 
+    if (teamCount >= 50) { 
+        printf("Maximum team limit reached!\n"); 
+        return; 
+    } 
+ 
+    printf("Enter team name: "); 
+    getchar(); // Consume newline left by previous input 
+    fgets(teams[teamCount].teamName, sizeof(teams[teamCount].teamName), stdin); 
+    teams[teamCount].teamName[strcspn(teams[teamCount].teamName, "\n")] = '\0'; 
+ 
+    printf("Enter sport type: "); 
+    fgets(teams[teamCount].sportType, sizeof(teams[teamCount].sportType), stdin); 
+    teams[teamCount].sportType[strcspn(teams[teamCount].sportType, "\n")] = '\0'; 
+ 
+    printf("Enter coach name: "); 
+    fgets(teams[teamCount].coach.name, sizeof(teams[teamCount].coach.name), stdin); 
+    teams[teamCount].coach.name[strcspn(teams[teamCount].coach.name, "\n")] = '\0'; 
+ 
+    printf("Enter coach age: "); 
+    scanf("%d", &teams[teamCount].coach.age); 
+ 
+    printf("Enter coach experience (in years): "); 
+    scanf("%d", &teams[teamCount].coach.experience); 
+ 
+    teamCount++; 
+    printf("Team added successfully!\n"); 
+} 
+ 
+// Function to search for a team by name 
+void searchTeam() { 
+    char searchName[50]; 
+    printf("Enter the team name to search: "); 
+    getchar(); // Consume newline left by previous input 
+    fgets(searchName, sizeof(searchName), stdin); 
+    searchName[strcspn(searchName, "\n")] = '\0'; 
+ 
+    for (int i = 0; i < teamCount; i++) { 
+        if (strcmp(teams[i].teamName, searchName) == 0) { 
+            printf("\nTeam Found:\n"); 
+            printf("Team Name: %s\n", teams[i].teamName); 
+            printf("Sport Type: %s\n", teams[i].sportType); 
+            printf("Coach Name: %s\n", teams[i].coach.name); 
+            printf("Coach Age: %d\n", teams[i].coach.age); 
+            printf("Coach Experience: %d years\n", teams[i].coach.experience); 
+            return; 
+        } 
+    } 
+ 
+    printf("Team not found!\n"); 
+} 
+ 
+// Function to display all teams 
+void displayTeams() { 
+    if (teamCount == 0) { 
+        printf("No teams to display!\n"); 
+       return;
+    } 
+ 
+    printf("\nList of Teams:\n"); 
+    for (int i = 0; i < teamCount; i++) { 
+        printf("\nTeam %d:\n", i + 1); 
+        printf("Team Name: %s\n", teams[i].teamName); 
+        printf("Sport Type: %s\n", teams[i].sportType); 
+        printf("Coach Name: %s\n", teams[i].coach.name); 
+        printf("Coach Age: %d\n", teams[i].coach.age); 
+        printf("Coach Experience: %d years\n", teams[i].coach.experience); 
+    } 
+} 
+ 
+int main() { 
+    int choice; 
+ 
+    while (1) { 
+        printf("\nSports Team Management System\n"); 
+        printf("1. Add Team\n"); 
+        printf("2. Search Team\n"); 
+        printf("3. Display All Teams\n"); 
+        printf("4. Exit\n"); 
+        printf("Enter your choice: "); 
+        scanf("%d", &choice); 
+ 
+        switch (choice) { 
+            case 1: 
+                addTeam(); 
+                break; 
+            case 2: 
+                searchTeam(); 
+                break; 
+            case 3: 
+                displayTeams(); 
+                break; 
+            case 4: 
+                printf("Exiting...\n"); 
+                return 0; 
+            default: 
+                printf("Invalid choice! Please try again.\n"); 
+        } 
+      printf("\n\n24ce032_TARANG");
+    }
+    
